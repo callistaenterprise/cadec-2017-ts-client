@@ -1,0 +1,45 @@
+{
+  "name": "addressbook",
+  "version": "1.0.0",
+  "description": "Client Side Address Book Build a Single Page Application (SPA) address book using TypeScript, HTML and CSS.",
+  "main": "index.js",
+  "scripts": {
+    "postinstall": "typings install",
+    "start": "webpack-dev-server --inline --hot --open --config=webpack.config.js",
+    "build": "NODE_ENV=production node node_modules/.bin/webpack && cp app/index.html dist/index.html"
+  },
+  "author": "Sedina Oruc",
+  "license": "ISC",
+  "dependencies": {
+    "jquery": "<3.0.0",
+    "angular": "^1.5.5",
+    "angular-animate": "^1.5.5",
+    "angular-aria": "^1.5.5",
+    "angular-local-storage": "^0.2.7",
+    "angular-material": "^1.0.8",
+    "angular-messages": "^1.5.5",
+    "angular-mocks": "^1.5.5",
+    "angular-route": "^1.5.5",
+    "angular-sanitize": "^1.5.5",
+    "angular-ui-router": "^0.2.18"
+  },
+  "devDependencies": {
+    "typescript": "~1.8",
+    "tslint": "^3.5.0",
+    "ng-annotate-loader": "^0.2.0",
+    "expose-loader": "^0.7.1",
+    "extract-text-webpack-plugin": "^1.0.1",
+    "html-loader": "^0.4.4",
+    "html-webpack-plugin": "^2.22.0",
+    "ts-loader": "^0.8.2",
+    "tslint-loader": "^2.1.5",
+    "source-map-loader": "^0.1.5",
+    "css-loader": "^0.23.1",
+    "file-loader": "^0.8.5",
+    "raw-loader": "^0.5.1",
+    "style-loader": "^0.13.1",
+    "webpack": "^1.13.0",
+    "webpack-core": "^0.5.0",
+    "webpack-dev-server": "^1.7.0"
+  }
+}
