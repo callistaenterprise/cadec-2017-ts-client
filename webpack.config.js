@@ -4,15 +4,15 @@ const loadersConfig = require('./webpack.loaders.js');
 const pluginsConfig = require('./webpack.plugins.js');
 
 var config = {
-    //context: __dirname + '/app',
     entry: {
         app: './app/app',
         vendor: [
-            'jquery',
             'angular',
             'angular-ui-router',
-            'angular-material',
-            'angular-messages'
+            'angular-animate',
+            'angular-aria',
+            'angular-messages',
+            'angular-material'
         ]
     },
     output: {
@@ -25,6 +25,7 @@ var config = {
         stats: 'minimal',
         contentBase: './app',
         historyApiFallback: true,
+        port: 9001,
         watchOptions: {
             aggregateTimeout: 300,
             poll: 1000
@@ -54,10 +55,5 @@ var config = {
     plugins: pluginsConfig
 };
 
-if (process.env.NODE_ENV === 'production') {
-    config.output.path = __dirname + '/dist';
-    config.plugins.push(new webpack.optimize.UglifyJsPlugin());
-    config.devtool = 'source-map';
-}
 
 module.exports = config;

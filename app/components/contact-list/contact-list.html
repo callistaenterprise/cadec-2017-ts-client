@@ -7,7 +7,7 @@
                 {{contact.value.country}}
             </p>
         </div>
-        <md-button class="md-secondary" ng-click="ctrl.editContact($event, contact.key, contact.value)">Edit
+        <md-button class="md-secondary" ng-click="ctrl.removeContact(contact.key)">Remove
         </md-button>
         <md-divider inset></md-divider>
     </md-list-item>
@@ -25,7 +25,7 @@
 
 <md-fab-speed-dial style="position: fixed; bottom:26px; right:26px;z-index:1000">
     <md-fab-trigger>
-        <md-button aria-label="menu" class="md-fab" ng-click="ctrl.addNewContact()">
+        <md-button aria-label="menu" class="md-fab" ng-click="ctrl.addNewContact($event)">
             <md-icon md-svg-src="/assets/icons/ic_person_add_white_24px.svg"></md-icon>
         </md-button>
     </md-fab-trigger>

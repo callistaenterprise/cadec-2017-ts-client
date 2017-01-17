@@ -1,18 +1,18 @@
 //import {IContact} from '../../core/data-stores/models/contact.i';
 import {ICountryService} from '../../core/data-stores/country.service.i';
-import {ICountry} from '../../core/data-stores/models/country.i';
+import {ICountry} from '../../core/models/country.i';
 
-class ContactController {
+class ContactDetailsController {
     private toolBarTitle: string;
-    private contact: any;
     static $inject = [
         '$mdDialog', 'CountryService'
     ];
 
     constructor(private $mdDialog: any,
                 private CountryService: ICountryService,
-                private user?: any) {
-        this.toolBarTitle = (angular.equals({}, user) || !angular.isDefined(user)) ? 'Add a new contact' : 'Edit a contact';
+                private contact?: any
+    ) {
+        this.toolBarTitle = (!angular.isDefined(contact)) ? 'Add a new contact' : 'Edit a contact';
     }
 
     getCountries(): Array<ICountry> {
@@ -32,6 +32,6 @@ class ContactController {
     }
 }
 
-export {ContactController};
+export {ContactDetailsController};
 
 

@@ -1,63 +1,41 @@
-import {ICacheService} from '../../core/cache/cache.service.i';
+import {IContactService} from '../../core/data-stores/contact.service.i';
+import {IContact} from '../../core/models/contact.i';
 
 class ContactListController {
-    private contacts = [];
+    private contacts: Array<{key: string, value: IContact}>;
+
     static $inject = [
-        '$mdDialog', 'CacheService'
+        '$mdDialog', 'ContactService'
     ];
 
     constructor(private $mdDialog: any,
-                private CacheService: ICacheService) {
+                private ContactService: IContactService) {
         console.log('ListController initialized');
+        this.contacts = this.getContacts();
     }
 
-    getContacts(): Array<any> {
-        return this.contacts;
+    private getContacts(): Array<{key: string, value: IContact}> {
+        return this.ContactService.getAllContacts();
     }
 
     addNewContact(ev) {
         this.$mdDialog.show({
-            //controller: 'ContactController as ctrl',
-            template: '<contact user=\"sedina\"></contact>',
+            template: '<contact-details></contact-details>',
             parent: angular.element(document.body),
-            locals: {
-                contact: 'hej'
-            },
             targetEvent: ev,
             clickOutsideToClose: true,
             fullscreen: false
         })
             .then((answer) => {
-                console.log('got answer from child dialog ...');
-                var contact = answer[0];
-                this.CacheService.add(contact);
-                // TODO must add getAll
-                // this.contacts = this.StoragaService.getAll();
+                let newContact: IContact = answer[0];
+                this.ContactService.addNewContact(newContact);
+                this.contacts = this.getContacts();
             });
     }
 
-    editContact(ev, key, contact) {
-        this.$mdDialog.show({
-            controller: 'ContactController as ctrl',
-            locals: {
-                contact: angular.copy(contact)
-            },
-            template: '<contact></contact>',
-            parent: angular.element(document.body),
-            targetEvent: ev,
-            clickOutsideToClose: true,
-            fullscreen: false
-        }).then((answer) => {
-            var updatedContact = answer[0],
-                remove = answer[1];
-            if (remove) {
-                this.CacheService.remove(key);
-            } else {
-                this.CacheService.update(key, updatedContact);
-            }
-            // TODO must add getAll
-            //this.contacts = this.CacheService.getAll();
-        });
+    removeContact(key) {
+        this.ContactService.removeContact(key);
+        this.contacts = this.getContacts();
     }
 }
 

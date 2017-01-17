@@ -12,7 +12,7 @@ let appModule: ng.IModule = angular.module('tsAddressBook', [
     coreModule.name,
     componentsModule.name
 ])
-    .config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
+    .config(function ($stateProvider, $urlRouterProvider, $locationProvider, $qProvider) {
         $locationProvider.html5Mode({
             enabled: true,
             requireBase: false
@@ -22,6 +22,7 @@ let appModule: ng.IModule = angular.module('tsAddressBook', [
             var $state = $injector.get('$state');
             $state.go('addressbookList');
         });
+        $qProvider.errorOnUnhandledRejections(false);
         $stateProvider
             .state('adddressbookList', {
                 url: '/',

@@ -1,11 +1,14 @@
-import {contactComponent} from './contact/contact.component';
+import {contactDetailsComponent} from './contact-details/contact-details.component';
 import {contactListComponent} from './contact-list/contact-list.component';
 
-import 'angular-material';
+import 'angular-animate';
+import 'angular-aria';
 import 'angular-messages';
+import 'angular-material';
 
-let componentsModule: ng.IModule = angular.module('tsAddressBook.components', ['ngMaterial', 'ngMessages'])
-    .component('contact', contactComponent)
-    .component('contactList', contactListComponent);
+
+let componentsModule: ng.IModule = angular.module('tsAddressBook.components', ['ngAnimate', 'ngAria', 'ngMessages', 'ngMaterial'])
+    .component('contactList', contactListComponent)
+    .component('contactDetails', contactDetailsComponent);
 
 export {componentsModule};

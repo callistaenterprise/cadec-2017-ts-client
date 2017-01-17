@@ -2,6 +2,7 @@ import {ICacheService} from './cache.service.i';
 
 class CacheService implements ICacheService {
     private cache: ng.ICacheObject;
+    private keys: Array<string>;
 
     static $inject = [
         '$cacheFactory',
@@ -10,6 +11,7 @@ class CacheService implements ICacheService {
 
     constructor(private $cacheFactory: ng.ICacheFactoryService, private cachePrefix: string) {
         this.cache = $cacheFactory(cachePrefix);
+        this.keys = [];
     }
 
     private s4(): string {
@@ -23,26 +25,33 @@ class CacheService implements ICacheService {
             this.s4() + '-' + this.s4() + this.s4() + this.s4();
     }
 
-    /*getAll(): Array<T>{
-
-     var lsKeys = this.cache.p,
-     contacts = [];
-     angular.forEach(lsKeys, (key) => {
-     var value = this.localStorageService.get(key);
-     contacts.push({'key': key, 'value': value});
-     });
-     return contacts;
-     }*/
-    add<T>(item: T) {
-        this.cache.put(this.guid(), item);
+    getAllByPrefix<T>(prefix: string): Array<{key: string, value: T}> {
+        let foundItems: Array<{key: string, value: T}> = [];
+        for (let key of this.keys) {
+            if (key.indexOf(prefix, 0) > -1) {
+                let item: T = <T>this.cache.get(key);
+                foundItems.push({'key': key, 'value': item});
+            }
+        }
+        return foundItems;
     }
 
-    update<T>(uuid: string, item: T) {
-        this.cache.put(uuid, item);
+    add<T>(item: T, prefix: string) {
+        let newKey: string = prefix + '-' + this.guid();
+        this.keys.push(newKey);
+        this.cache.put(newKey, item);
     }
 
-    remove(uuid: string) {
-        this.cache.remove(uuid);
+    update<T>(key: string, item: T) {
+        this.cache.put(key, item);
+    }
+
+    remove(key: string) {
+        this.cache.remove(key);
+        var indexOfKey: number = this.keys.indexOf(key, 0);
+        if (indexOfKey > -1) {
+            this.keys.splice(indexOfKey, 1);
+        }
     }
 
 }
