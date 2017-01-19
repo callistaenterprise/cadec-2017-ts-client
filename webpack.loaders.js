@@ -18,8 +18,5 @@ module.exports = [
     }, {
         test: /\.(woff|svg|ttf|eot)([\?]?.*)$/,
         loader: 'file-loader?name=fonts/[name].[ext]'
-    }, {
-        test: require.resolve('jquery'),
-        loader: "expose?jQuery!expose?$"
     }
 ];
